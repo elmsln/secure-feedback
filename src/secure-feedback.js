@@ -8,7 +8,8 @@ class SecureFeedback extends LitElement {
   static styles = css`
     :host {
       display: block;
-      width: 100%;
+      margin: 20px auto;
+      max-width: 800px;
       visibility: visible;
       opacity: 1;
       transition: opacity 2s ease-in-out, visibility 2s ease-in-out;
@@ -38,20 +39,23 @@ class SecureFeedback extends LitElement {
     const getParam = currentURL.searchParams.get('message');
     fetch('/api/aes256', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ op: 'decode', data: getParam }),
-      })
-      .then((response) => response.ok ? response.json() : null)
-      .then((data) => {
-        this.loading = false;
-        this.innerHTML = '';
-        this.innerHTML = data.data;
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      }
+      body: JSON.stringify({ op: 'decode', data: getParam}),
+    })
+    .then((response) => response.ok ? response.json() : null)
+    .then((data) => {
+      this.loading = false;
+      this.innerHTML = '';
+      this.innerHTML = data.data;
+      // give dom time to notice all these new tags being appended
+      setTimeout(() => {
+        if (window.WCAutoload) {
+          window.WCAutoload.process();
+        }          
+      }, 0);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    }
     );
   }
 

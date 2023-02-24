@@ -39,12 +39,8 @@ export default async function handler(req, res) {
   }
 }
 
-
-
 function encrypt(key, data) {
-
   let keyHash = crypto.createHash('sha256').update(String(key)).digest('base64').substr(0, 32);
-
   const iv = Buffer.alloc(16, 0);
   var cipher = crypto.createCipheriv('aes-256-ctr', keyHash, iv);
   var crypted = cipher.update(data, 'utf-8', 'hex');
