@@ -1,4 +1,6 @@
 import { LitElement, html, css } from 'lit';
+import "@lrnwebcomponents/hax-iconset/lib/simple-hax-iconset.js";
+import "@lrnwebcomponents/simple-icon/lib/simple-icon-lite.js";
 
 class SecureFeedback extends LitElement {
   static properties = {
